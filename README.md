@@ -15,7 +15,7 @@ libGRVY
 
 ## Compilation Instructions
 
-Coming soon!
+Project is currently designed to compile on TACC systems (specifically, stampede) only.
 
 ## How to run the code
 
