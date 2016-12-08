@@ -31,9 +31,11 @@ void euler_simple_timestep(Vec2& inp, const progOptions::Options& opts){
 }
 
 // Solve a full trajectory, recording values. state should have the initial value
-vector<Vec2> euler_simple_trajectory(Vec2 state, const progOptions::Options& opts){
+vector<Vec2> euler_simple_trajectory(Vec2 initState, const progOptions::Options& opts){
   vector<Vec2> solPath;
   solPath.reserve(opts.nsteps);
+
+  Vec2 state = initState;
 
   // Mutate the state
   for (int i = 0; i < opts.nsteps; i++){

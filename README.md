@@ -26,3 +26,20 @@ Project is currently designed to compile on TACC systems (specifically, stampede
 
 Also coming soon!
 
+## Program parts:
+
+####datatypes.cxx
+
+Contains code for data, structs/classes, and conversions between them.
+
+####euler.cxx
+
+Contains code for running the Euler method on the simple ODE.
+
+####main.cxx
+
+Main. Duh.
+
+####progopt.cxx
+
+Contains code and classes for processing input parameters using GRVY.

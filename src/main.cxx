@@ -2,12 +2,18 @@
 #include<cstdlib>
 #include<string>
 #include<stdexcept>
+#include<vector>
 
 #include "progopt.h"
+#include "datatypes.h"
+#include "euler.h"
 
 using namespace std;
 
 int main(int argc, char** argv){
+
+    // ARGUMENT SHENANIGANS
+
     string optionFilename;
     if (argc == 1){
         optionFilename = "input.dat"; //If no args given, assume input.dat
@@ -22,13 +28,32 @@ int main(int argc, char** argv){
             << "as the parameter file." << endl;
     }
 
+    progOptions::Options myOpts;
     try{
-      progOptions::Options myOpts = progOptions::parseProgOptions(optionFilename);
+      myOpts = progOptions::parseProgOptions(optionFilename);
     }
     catch(exception& e){
       cerr << "An error occurred while trying to read the parameter file." << '\n'
            << "The error was reported as: " << '\n' << e.what() << endl;
       cerr << "Fatal, exiting... " << endl;
       return 1;
+    }
+
+    //Default return types are wrapped vectors of vectors of doubles. 
+    //Store the unwrapped data here for output processing later.
+    vector<vector<double> > solutionPath = vector<vector<double > >(myOpts.nsteps);
+
+    // SIMPLE PROBLEM
+    if (myOpts.inputType == progOptions::simple){
+      if (myOpts.solType == progOptions::euler){
+        // Find the solution path
+        Vec2 initialValues = Vec2(0.0,0.0);
+        vector<Vec2> sol = euler_simple_trajectory(initialValues, myOpts);
+        
+        //Copy the solution into solutionPath
+        for(int j = 0; j < myOpts.nsteps; j++){
+          solutionPath[j] = sol[j].toVector();
+        }
+      }
     }
 }

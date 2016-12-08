@@ -2,21 +2,18 @@ INC_DIR=../include
 
 LDFLAGS=-L$(TACC_GRVY_LIB) -lgrvy
 
-OBJS=main.o progopt.o euler.o
+OBJS=main.o progopt.o euler.o datatypes.o
 
 all: main.x
 
+debug: CXXFLAGS += -DDEBUG -g
+debug: all
+
 main.x: $(OBJS)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $^ -I$(INC_DIR) -o $@ $(LDFLAGS)
 
-main.o: main.cxx
-	$(CXX) -I$(INC_DIR) $^ -c -o $@
-
-progopt.o: progopt.cxx
-	$(CXX) $^ -I$(INC_DIR) -I$(TACC_GRVY_INC)  -c -o $@
-
-euler.o: euler.cxx
-	$(CXX) $^ -I$(INC_DIR) -c -o $@
+%.o: %.cxx
+	$(CXX) $(CXXFLAGS) $^ -I$(INC_DIR) -I$(TACC_GRVY_INC) -c -o $@
 
 .PHONY: clean distclean
 

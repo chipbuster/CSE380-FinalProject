@@ -1,5 +1,6 @@
 #ifndef EULER_H
 #define EULER_H
+#include<vector>
 
 #include "progopt.h"
 #include "datatypes.h"
