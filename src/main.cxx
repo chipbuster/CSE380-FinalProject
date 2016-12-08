@@ -7,6 +7,7 @@
 #include "progopt.h"
 #include "datatypes.h"
 #include "euler.h"
+#include "dumpsolution.h"
 
 using namespace std;
 
@@ -39,6 +40,10 @@ int main(int argc, char** argv){
       return 1;
     }
 
+    if(myOpts.debug){
+      cout << "Finished parsing arguments. Now running the main program." << endl;
+    }
+
     //Default return types are wrapped vectors of vectors of doubles. 
     //Store the unwrapped data here for output processing later.
     vector<vector<double> > solutionPath = vector<vector<double > >(myOpts.nsteps);
@@ -56,4 +61,13 @@ int main(int argc, char** argv){
         }
       }
     }
+
+
+
+    // DUMP SOLUTION TO FILES
+    string outFilename = string("output.csv");
+    if (myOpts.debug){
+      cout << "Dumping output to " << outFilename << endl;
+    }
+    dumpSolutionPath(solutionPath, string("output.csv"));
 }

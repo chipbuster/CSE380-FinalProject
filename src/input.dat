@@ -3,7 +3,7 @@ solMethod = 0                   # 0 = euler
                                 # 1 = rk4
                                 # 2 = rkck
                                 # 3 = rkf45
-stepSize = 0.5                  # Step size
-nsteps = 100                    # total number of steps to take
+stepSize = 0.01                 # Step size
+nsteps = 1000                   # total number of steps to take
 verification = false            # verification mode?
 debug = false                   # debug mode?

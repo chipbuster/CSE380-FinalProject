@@ -2,11 +2,14 @@ INC_DIR=../include
 
 LDFLAGS=-L$(TACC_GRVY_LIB) -lgrvy
 
-OBJS=main.o progopt.o euler.o datatypes.o
+OBJS=main.o progopt.o euler.o datatypes.o dumpsolution.o
 
 all: main.x
 
-debug: CXXFLAGS += -DDEBUG -g
+opt: CXXFLAGS += -O3
+opt: all
+
+debug: CXXFLAGS += -DDEBUG -g -O0
 debug: all
 
 main.x: $(OBJS)
