@@ -7,6 +7,11 @@ the precanned project. This is the repo for that project.
 The project instructions can be found in canned\_project.pdf. I intend to
 implement most of the project...though of course time constraints may apply.
 
+## Simple ODE
+
+The simple ODE that I'll be solving is dx/dt = 4 sin(t) + 2 t^3.
+
+Its analytical solution is x(t) = - 4 cos(t) + t^4 / 2 + C
 
 ## Prerequisites
 

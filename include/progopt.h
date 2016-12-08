@@ -13,6 +13,7 @@ namespace progOptions{
     InputProblemType inputType;
     SolveMethod solType;
     double stepSize;
+    int nsteps;
     bool verification;
     bool debug;
   };

@@ -8,12 +8,13 @@
 namespace progOptions{
 
   Options parseProgOptions(std::string filename){
-    int inputTypeStr, solTypeStr;
+    int inputTypeStr = -1, solTypeStr = -1, nsteps = -1;
     double stepSize;
     bool verification, debug;
 
     GRVY::GRVY_Input_Class iparse;
 
+    // Parse the input from the file, using default options where appropriate
     if(! iparse.Open(filename.c_str())){
       throw std::invalid_argument("Could not open input file");
     }
@@ -23,7 +24,11 @@ namespace progOptions{
     }
 
     if(!iparse.Read_Var("solMethod",&solTypeStr)){
-      throw std::invalid_argument("Could not read required parameter \"problem\"");
+      throw std::invalid_argument("Could not read required parameter \"solMethod\"");
+    }
+
+    if(!iparse.Read_Var("nsteps",&nsteps)){
+      throw std::invalid_argument("Could not read required parameter \"nsteps\"");
     }
 
     if(!iparse.Read_Var("stepSize",&stepSize)){
@@ -73,6 +78,7 @@ namespace progOptions{
     progOpts.stepSize = stepSize;
     progOpts.verification = verification;
     progOpts.debug = debug;
+    progOpts.nsteps = nsteps;
     
     return progOpts;
   }
