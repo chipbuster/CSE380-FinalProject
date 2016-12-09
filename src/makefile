@@ -22,7 +22,10 @@ main.x: $(OBJS)
 .PHONY: clean distclean
 
 clean:
-	rm -f *.o
+	rm -f *.o *.csv
 
 distclean: clean
 	rm -f main.x
+
+purge: distclean
+	rm -f *.csv
