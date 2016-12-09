@@ -55,12 +55,12 @@ int main(int argc, char** argv){
     //Store the unwrapped data here for output processing later.
     vector<vector<double> > numericPath;// = vector<vector<double> >();
     vector<vector<double> > analyticPath;// = vector<vector<double> >();
-    vector<Vec2> rawNumeric;// = vector<Vec2>();
-    vector<Vec2> rawAnalytic;// = vector<Vec2>();
-    Vec2 initialValues = Vec2(0.0,0.0);
 
     // SIMPLE PROBLEM
     if (myOpts.inputType == progOptions::simple){
+      vector<Vec2> rawNumeric;// = vector<Vec2>();
+      vector<Vec2> rawAnalytic;// = vector<Vec2>();
+      Vec2 initialValues = Vec2(0.0,0.0);
  
       if (myOpts.solType == progOptions::euler){
         // Find the solution path
@@ -84,6 +84,14 @@ int main(int argc, char** argv){
         rawAnalytic = analytical_solution(rawNumeric);
         analyticPath = collapseSolution(rawAnalytic);
       }
+      //If verification is enabled, compare the errors at the last timestep
+      if (myOpts.verification){
+        double err = calcSimpleNumericalError(rawAnalytic, rawNumeric);
+        cout << "=== Verification Mode Results ===" << endl;
+        cout << "With h=" << myOpts.stepSize << " and " << myOpts.nsteps <<
+               " steps, the error is " << err << endl;
+      }
+
     }
 
     // DUMP SOLUTION TO FILES
@@ -101,11 +109,4 @@ int main(int argc, char** argv){
       dumpSolutionPath(analyticPath, analyticFilename);
     }
 
-    //If verification is enabled, compare the errors at the last timestep
-    if (myOpts.verification){
-      double err = calcSimpleNumericalError(rawAnalytic, rawNumeric);
-      cout << "=== Verification Mode Results ===" << endl;
-      cout << "With h=" << myOpts.stepSize << " and " << myOpts.nsteps <<
-              " steps, the error is " << err << endl;
-    }
 }

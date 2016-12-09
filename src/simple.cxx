@@ -131,10 +131,6 @@ vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& op
        throw std::runtime_error(gsl_strerror(status));
       }
 
-      if (opts.debug){
-        cout << y[0] << " , " << t << endl;
-      }
-      
       results[i] = Vec2(y[0],t);    
     }
 
