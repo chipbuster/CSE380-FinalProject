@@ -47,8 +47,9 @@ int main(int argc, char** argv){
     if( !argsSane ){
       return 2;
     }
-
+ 
     if(myOpts.debug){
+      progOptions::reportOptions(myOpts);
       cout << "Finished parsing arguments. Now running the main program." << endl;
     }
 
@@ -89,14 +90,14 @@ int main(int argc, char** argv){
     if (myOpts.debug){
       cout << "Dumping output to " << outFilename << endl;
     }
-    dumpSolutionPath(numericPath, string("output.csv"));
+    dumpSolutionPath(numericPath, outFilename);
     // If verification is enabled, dump the verification results
     if (myOpts.verification){
       string analyticFilename = string("analytic.csv");
       if (myOpts.debug){
         cout << "Dumping analytic solution to " << analyticFilename << endl;
       }
-      dumpSolutionPath(analyticPath, string("output.csv"));
+      dumpSolutionPath(analyticPath, analyticFilename);
     }
    
 }

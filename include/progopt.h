@@ -20,7 +20,7 @@ namespace progOptions{
 
   Options parseProgOptions(std::string filename);
   bool checkSanity(const Options& toCheck);
-
+  void reportOptions(const Options& opts);
 }
 
 #endif

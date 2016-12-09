@@ -5,8 +5,10 @@
 #include "progopt.h"
 #include "grvy.h"
 
+using std::cout;
 using std::cerr;
 using std::endl;
+using std::string;
 
 namespace progOptions{
 
@@ -44,7 +46,7 @@ namespace progOptions{
 
 
     // Done parsing, now make sense of the options we've just parsed
-    Options progOpts;
+    Options progOpts = Options();
 
     // There are two valid values for inputTypeStr
     if(inputTypeStr == 0){
@@ -109,6 +111,24 @@ namespace progOptions{
     }
 
     return argsConsistent;
+  }
+
+  void reportOptions(const Options& opts){
+    string inputType, solType;
+    if (opts.inputType == simple) inputType = string("simple");
+    else inputType = string("charged");
+
+    if (opts.solType == euler) solType = string("euler");
+    else if (opts.solType == rk4) solType = string("rk4");
+    else if (opts.solType == rkck) solType = string("rkck");
+    else if (opts.solType == rkf45) solType = string("rkf45");
+
+    cout << "Solving the " << inputType << " problem with "
+         << solType << endl;
+    cout << "Step size is: " << opts.stepSize << endl;
+    cout << "Number of steps is: " << opts.nsteps << endl;
+    cout << "Debug mode is " << (opts.debug ? "ON" : "OFF") << endl;
+    cout << "Verification mode is " << (opts.verification ? "ON" : "OFF") << endl;
   }
 }
 

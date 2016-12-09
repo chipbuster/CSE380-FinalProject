@@ -18,11 +18,6 @@ void euler_simple_timestep(Vec2& inp, const progOptions::Options& opts){
   double dt = opts.stepSize;
   double dx = (4 * sin(t) + 2 * t * t * t) * dt;
 
-  if(opts.debug){
-    cout << "Advancing simulation: at x="<<x<<", t="<<t<<". After taking step"
-         << "h="<<dt<<", we have x="<<x + dx<<", t="<<t + dt<<endl;
-  }
-
   t += dt;
   x += dx;
 
