@@ -86,6 +86,9 @@ vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& op
 {
 
   // Initialize the parts of GSL ODE that relate only to the problem.
+  
+  /* In the general form of the problem, there are two parameters. In this case,
+   * I've specialized them to 4 and 2, so I can record them in the code itself*/
   double params[2] = {4,2};
   gsl_odeiv2_system sys = {simple_func, simple_jac, 1, params};
 
