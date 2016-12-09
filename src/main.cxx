@@ -98,6 +98,10 @@ int main(int argc, char** argv){
     }
 
     //If verification is enabled, compare the errors at the last timestep
-
-   
+    if (myOpts.verification){
+      double err = calcSimpleNumericalError(rawAnalytic, rawNumeric);
+      cout << "=== Verification Mode Results ===" << endl;
+      cout << "With h=" << myOpts.stepSize << " and " << myOpts.nsteps <<
+              " steps, the error is " << err << endl;
+    }
 }

@@ -13,4 +13,6 @@ std::vector<Vec2> analytical_solution(const std::vector<Vec2>& numericalSolution
 
 double calcAnalyticSolution(double t, double C);
 
+double calcSimpleNumericalError(vector<Vec2> analytic, vector<Vec2> numeric);
+
 #endif

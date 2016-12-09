@@ -12,6 +12,9 @@
 
 using namespace std;
 
+
+/******** SIMPLE EULER SOLUTIONS ************/
+
 // Take a timestep using Euler's method, with the equation
 // dx/dt = 4 sin(t) + 2 t^3
 void euler_simple_timestep(Vec2& inp, const progOptions::Options& opts){
@@ -47,6 +50,19 @@ double calcAnalyticSolution(double t, double C){
   return -4 * cos(t) + ((t*t)*(t*t) / 2) - C;
 }
 
+/********** GSL SOLUTIONS ******************/
+
+
+
+
+
+
+
+
+
+
+/************** ANALYTIC SOLUTIONS ********************/
+
 // Only called in verification mode. The analytic solution is
 // x(t) = -4 cos(t) + t^4 / 2 + C
 vector<Vec2> analytical_solution(const vector<Vec2>& numericalSolutionPath){
@@ -72,3 +88,11 @@ vector<Vec2> analytical_solution(const vector<Vec2>& numericalSolutionPath){
   return analyticalSolution;
 }
 
+double calcSimpleNumericalError(vector<Vec2> analytic, vector<Vec2> numeric){
+  Vec2 lastAnalytic = analytic.back();
+  Vec2 lastNumeric = numeric.back();
+
+  cout << lastAnalytic.x << " " << lastNumeric.x << endl;
+
+  return abs(lastAnalytic.x - lastNumeric.x);
+}
