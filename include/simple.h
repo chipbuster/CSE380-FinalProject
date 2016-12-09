@@ -15,4 +15,6 @@ double calcAnalyticSolution(double t, double C);
 
 double calcSimpleNumericalError(vector<Vec2> analytic, vector<Vec2> numeric);
 
+vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& opts);
+
 #endif

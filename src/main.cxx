@@ -57,13 +57,13 @@ int main(int argc, char** argv){
     vector<vector<double> > analyticPath;// = vector<vector<double> >();
     vector<Vec2> rawNumeric;// = vector<Vec2>();
     vector<Vec2> rawAnalytic;// = vector<Vec2>();
+    Vec2 initialValues = Vec2(0.0,0.0);
 
     // SIMPLE PROBLEM
     if (myOpts.inputType == progOptions::simple){
  
       if (myOpts.solType == progOptions::euler){
         // Find the solution path
-        Vec2 initialValues = Vec2(0.0,0.0);
         rawNumeric = euler_simple_trajectory(initialValues, myOpts);
 
         //Copy the solution into solutionPath
@@ -71,7 +71,11 @@ int main(int argc, char** argv){
       }
 
       else if (myOpts.solType == progOptions::rk4){
-        //TODO: Implement with GSL
+        // Find the solution path
+        rawNumeric = gsl_simple_trajectory(initialValues, myOpts);
+
+        //Copy the solution into solutionPath
+        numericPath = collapseSolution(rawNumeric);
       }
 
       // If verification is turned on, calculate the analytical solution

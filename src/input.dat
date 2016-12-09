@@ -1,5 +1,5 @@
 problem   = 0                   # 0 for simple problem, 1 for charged particle
-solMethod = 0                   # 0 = euler
+solMethod = 1                   # 0 = euler
                                 # 1 = rk4
                                 # 2 = rkck
                                 # 3 = rkf45
