@@ -1,6 +1,9 @@
 INC_DIR=../include
 
-LDFLAGS=-L$(TACC_GRVY_LIB) -L$(TACC_GSL_LIB) -L$(TACC_MKL_LIB) -lgrvy -lgsl -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+#This line generate by Intel Line Link Advisor
+MKL_LINK_LINE= -L$(TACC_MKL_LIB) -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+
+LDFLAGS=-L$(TACC_GRVY_LIB) -L$(TACC_GSL_LIB) -lgrvy -lgsl $(MKL_LINK_LINE)
 CXXFLAGS=-Wall
 
 OBJS=main.o progopt.o simple.o datatypes.o dumpsolution.o
