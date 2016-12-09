@@ -1,8 +1,9 @@
 INC_DIR=../include
 
 LDFLAGS=-L$(TACC_GRVY_LIB) -lgrvy
+CXXFLAGS=-Wall
 
-OBJS=main.o progopt.o euler.o datatypes.o dumpsolution.o
+OBJS=main.o progopt.o simple.o datatypes.o dumpsolution.o
 
 all: main.x
 

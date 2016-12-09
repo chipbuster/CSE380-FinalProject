@@ -5,6 +5,9 @@
 #include "progopt.h"
 #include "grvy.h"
 
+using std::cerr;
+using std::endl;
+
 namespace progOptions{
 
   Options parseProgOptions(std::string filename){
@@ -75,6 +78,8 @@ namespace progOptions{
       throw std::invalid_argument("Bad parameter value in input file"); 
     }
 
+    // These are okay to use directly, since the parsing step will either
+    // fail or assign default values to them.
     progOpts.stepSize = stepSize;
     progOpts.verification = verification;
     progOpts.debug = debug;
@@ -82,4 +87,28 @@ namespace progOptions{
     
     return progOpts;
   }
+
+  // Make sure the options all make sense.
+  bool checkSanity(const Options& opts){
+    bool argsConsistent = true;
+    if (opts.inputType == charged && opts.solType == euler){
+      cerr << "Euler method not implemented for charged particle problem. " 
+           << '\n' << "Check the input file and try again." << endl;
+      argsConsistent = false;
+    }
+
+    if (opts.inputType == charged && opts.verification){
+      cerr << "Cannot run in verification mode with charged particle problem: "
+           << '\n' << "Analytical solution not prepared." << endl;
+      argsConsistent = false;
+    }
+
+    if(opts.inputType == simple && opts.solType != euler && opts.solType != rk4){
+      cerr << "Only euler and rk4 can be used to solve the simple problem" << endl;
+      argsConsistent = false;
+    }
+
+    return argsConsistent;
+  }
 }
+

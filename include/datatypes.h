@@ -9,6 +9,7 @@ using std::vector;
 struct Vec2{
   double x,t;
 
+  Vec2();
   Vec2(double x1, double t1);
 
   vector<double> toVector();
@@ -22,5 +23,7 @@ struct Vec6{
 
   vector<double> toVector();
 };
+
+vector<vector<double> > collapseSolution(vector<Vec2> input);
 
 #endif

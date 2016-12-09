@@ -28,19 +28,27 @@ vector<double> mergeSolutionPath(vector<vector<double> > solPath){
 
 }
 
-//Dump solution paths to a file
+//Dump solution paths to a file, with one variable per line, space-separated
 void dumpSolutionPath(vector<vector<double> > solPath, string outFilename){
   size_t numVars = solPath[0].size();
   size_t numSamp = solPath.size();
 
+  // Get a 1D vector where all entries of the same type (e.g. all times)
+  // are in one block which is numSamp wide.
   vector<double> linearized = mergeSolutionPath(solPath);
   vector<double>::iterator it = linearized.begin();
 
   std::ofstream dumpF(outFilename.c_str());
   
+  // Iterate down the vector, putting a newline where a new variable 
+  // block begins.
   for(size_t i = 0; i < numVars; i++){
     for(size_t j = 0; j < numSamp; j++){
-      dumpF << *it << '\t';
+      if(j == numSamp - 1){
+        dumpF << *it;
+      } else{
+        dumpF << *it << ',';
+      }
       *it++;
     }
     dumpF << '\n';
