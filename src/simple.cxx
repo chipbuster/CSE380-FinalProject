@@ -100,17 +100,22 @@ vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& op
   double y[1]; y[0] = x;
   gsl_odeiv2_driver * d;
 
+  // Driver requires several variables that we won't really use.
+  const double dummyHStart = h;
+  const double dummyEpsAbs = 1e100;
+  const double dummyEpsRel = 1e100;
   switch(opts.solType){
     case progOptions::rk4: 
       d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4
-                                        ,1e-6, 1e-6, 0.0);
+                                        ,dummyHStart,dummyEpsAbs,dummyEpsRel);
       break;    
     case progOptions::rkck: 
       d = gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rkck
-                                     ,1e-6, 1e-6, 0.0);
+                                        ,dummyHStart,dummyEpsAbs,dummyEpsRel);
       break;    
     case progOptions::rkf45: 
-      d = gsl_odeiv2_driver_alloc_y_new (&sys,  gsl_odeiv2_step_rkf45,1e-6, 1e-6, 0.0);
+      d = gsl_odeiv2_driver_alloc_y_new (&sys,  gsl_odeiv2_step_rkf45
+                                        ,dummyHStart,dummyEpsAbs,dummyEpsRel);
       break;    
     default: throw std::invalid_argument("Got non-RK solType in RK method");
   }
@@ -122,7 +127,12 @@ vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& op
       int status = gsl_odeiv2_driver_apply_fixed_step (d, &t, h, 1, y);
 
       if (status != GSL_SUCCESS){
-       throw std::runtime_error("gsl_odeiv2_driver encountered an error.");
+       cout << gsl_strerror(status) << endl;
+       throw std::runtime_error(gsl_strerror(status));
+      }
+
+      if (opts.debug){
+        cout << y[0] << " , " << t << endl;
       }
       
       results[i] = Vec2(y[0],t);    

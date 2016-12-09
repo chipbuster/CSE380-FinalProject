@@ -105,11 +105,6 @@ namespace progOptions{
       argsConsistent = false;
     }
 
-    if(opts.inputType == simple && opts.solType != euler && opts.solType != rk4){
-      cerr << "Only euler and rk4 can be used to solve the simple problem" << endl;
-      argsConsistent = false;
-    }
-
     return argsConsistent;
   }
 
