@@ -9,6 +9,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
 
+#include "datatypes.h"
 #include "progopt.h"
 #include "simple.h"
 
@@ -89,7 +90,7 @@ int charged_jac (double t, const double y[], double *dfdy,
 
 
 // Main driver
-vector<Vec6> gsl_charged_trajectory(Vec6 initState,const progOptions::Options& opts)
+vector<Vec6> gsl_charged_trajectory(Vec6 initState, const progOptions::Options& opts)
 {
   // Initialize the parts of GSL ODE that relate only to the problem.
 
@@ -132,7 +133,8 @@ vector<Vec6> gsl_charged_trajectory(Vec6 initState,const progOptions::Options& o
     default: throw std::invalid_argument("Got non-RK solType in RK method");
   }
 
-
+  // Time is not explicitly used for results
+  double t = 0.0;
   for (int i = 0; i < nsteps; i++)
     { 
       // Runs a single-step iteration of the ODE

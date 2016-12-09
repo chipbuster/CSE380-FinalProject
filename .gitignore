@@ -146,3 +146,4 @@ CTestTestfile.cmake
 
 ### OUTPUT
 *.csv
+data/*

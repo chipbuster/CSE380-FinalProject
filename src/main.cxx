@@ -8,6 +8,7 @@
 #include "datatypes.h"
 #include "simple.h"
 #include "dumpsolution.h"
+#include "charged.h"
 
 using namespace std;
 
@@ -51,8 +52,7 @@ int main(int argc, char** argv){
       cout << "Finished parsing arguments. Now running the main program." << endl;
     }
 
-    //Default return types are wrapped vectors of vectors of doubles. 
-    //Store the unwrapped data here for output processing later.
+    //Declare these structures for output later
     vector<vector<double> > numericPath;// = vector<vector<double> >();
     vector<vector<double> > analyticPath;// = vector<vector<double> >();
 
@@ -62,37 +62,42 @@ int main(int argc, char** argv){
       vector<Vec2> rawAnalytic;// = vector<Vec2>();
       Vec2 initialValues = Vec2(0.0,0.0);
  
+      /* Solve with the appropriate method and collapse the solution
+       * by turning it from vector-of-struct into vector-of-vector */
       if (myOpts.solType == progOptions::euler){
-        // Find the solution path
         rawNumeric = euler_simple_trajectory(initialValues, myOpts);
-
-        //Copy the solution into solutionPath
         numericPath = collapseSolution(rawNumeric);
       }
-
-      else if (myOpts.solType == progOptions::rk4){
-        // Find the solution path
+      else{  // Use a Runge-Kutta variant
         rawNumeric = gsl_simple_trajectory(initialValues, myOpts);
-
-        //Copy the solution into solutionPath
         numericPath = collapseSolution(rawNumeric);
       }
 
-      // If verification is turned on, calculate the analytical solution
+      /* If verification is turned on, calculate the analytical solution
+       * and compare to numerical at the last timestep */  
       if(myOpts.verification){
         //Uses numeric solution as a template to generate the analytic one
         rawAnalytic = analytical_solution(rawNumeric);
         analyticPath = collapseSolution(rawAnalytic);
-      }
-      //If verification is enabled, compare the errors at the last timestep
-      if (myOpts.verification){
+
         double err = calcSimpleNumericalError(rawAnalytic, rawNumeric);
         cout << "=== Verification Mode Results ===" << endl;
         cout << "With h=" << myOpts.stepSize << " and " << myOpts.nsteps <<
                " steps, the error is " << err << endl;
       }
-
     }
+    
+    // CHARGED PROBLEM
+    if (myOpts.inputType == progOptions::charged){
+      vector<Vec6> rawNumeric;// = vector<Vec2>();
+      vector<Vec6> rawAnalytic;// = vector<Vec2>();
+      Vec6 initialValues = Vec6(0,0,0,20,0,2); // From PDF
+ 
+      // Find solution path and collapse to vector-of-vectors
+      rawNumeric = gsl_charged_trajectory(initialValues, myOpts);
+      numericPath = collapseSolution(rawNumeric);
+    }
+
 
     // DUMP SOLUTION TO FILES
     string outFilename = string("output.csv");
@@ -108,5 +113,4 @@ int main(int argc, char** argv){
       }
       dumpSolutionPath(analyticPath, analyticFilename);
     }
-
 }

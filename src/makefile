@@ -6,7 +6,7 @@ MKL_LINK_LINE= -L$(TACC_MKL_LIB) -Wl,--no-as-needed -lmkl_intel_ilp64 -lmkl_sequ
 LDFLAGS=-L$(TACC_GRVY_LIB) -L$(TACC_GSL_LIB) -lgrvy -lgsl $(MKL_LINK_LINE)
 CXXFLAGS=-Wall
 
-OBJS=main.o progopt.o simple.o datatypes.o dumpsolution.o
+OBJS=main.o progopt.o simple.o datatypes.o dumpsolution.o charged.o
 
 all: main.x
 
