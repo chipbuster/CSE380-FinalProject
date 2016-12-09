@@ -5,5 +5,5 @@ solMethod = 0                   # 0 = euler
                                 # 3 = rkf45
 stepSize = 0.01                 # Step size
 nsteps = 1000                   # total number of steps to take
-verificationMode = true         # verification mode?
-debugMode = true                # debug mode?
+verificationMode = false        # verification mode?
+debugMode = false               # debug mode?

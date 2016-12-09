@@ -15,12 +15,19 @@ Its analytical solution is x(t) = - 4 cos(t) + t^4 / 2 + C
 
 ## Prerequisites
 
+mkl
 libgsl
 libGRVY
 
 ## Compilation Instructions
 
 Project is currently designed to compile on TACC systems (specifically, stampede) only.
+
+In order to compile this software, you need the following modules in your environment:
+
+```
+xalt/0.6   TACC   gcc/4.7.1  grvy/0.32.0  gsl/1.15  mkl/13.0.2.146
+```
 
 ## How to run the code
 

@@ -3,6 +3,10 @@
 #include<vector>
 #include<cassert>
 
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_odeiv2.h>
+
 #include "progopt.h"
 #include "simple.h"
 
@@ -23,7 +27,6 @@ void euler_simple_timestep(Vec2& inp, const progOptions::Options& opts){
 
   // Update state of solution
   inp.x = x; inp.t = t;
-
 }
 
 // Solve a full trajectory, recording values. state should have the initial value
@@ -38,7 +41,6 @@ vector<Vec2> euler_simple_trajectory(Vec2 initState, const progOptions::Options&
   }
 
   return solPath;
-
 }
 
 double calcAnalyticSolution(double t, double C){

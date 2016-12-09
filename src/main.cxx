@@ -28,8 +28,6 @@ int main(int argc, char** argv){
             << "as the parameter file." << endl;
     }
 
-
-
     // Attempt to parse the opts
     progOptions::Options myOpts;
     try{
@@ -53,13 +51,12 @@ int main(int argc, char** argv){
       cout << "Finished parsing arguments. Now running the main program." << endl;
     }
 
-
     //Default return types are wrapped vectors of vectors of doubles. 
     //Store the unwrapped data here for output processing later.
-    vector<vector<double> > numericPath = vector<vector<double> >();
-    vector<vector<double> > analyticPath = vector<vector<double> >();
-    vector<Vec2> rawNumeric = vector<Vec2>();
-    vector<Vec2> rawAnalytic = vector<Vec2>();
+    vector<vector<double> > numericPath;// = vector<vector<double> >();
+    vector<vector<double> > analyticPath;// = vector<vector<double> >();
+    vector<Vec2> rawNumeric;// = vector<Vec2>();
+    vector<Vec2> rawAnalytic;// = vector<Vec2>();
 
     // SIMPLE PROBLEM
     if (myOpts.inputType == progOptions::simple){
@@ -99,5 +96,8 @@ int main(int argc, char** argv){
       }
       dumpSolutionPath(analyticPath, analyticFilename);
     }
+
+    //If verification is enabled, compare the errors at the last timestep
+
    
 }
