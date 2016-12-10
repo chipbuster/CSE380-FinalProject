@@ -1,0 +1,69 @@
+---
+title: "CSE380 Canned Project Report"
+author: "Kevin Song"
+date: "December 9, 2016"
+output: 
+  pdf_document:
+    fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Targets
+
+My canned project was started five minutes before midnight on Wednesday, when it
+became apparent that my planned project no longer had any life in it. 
+Consequently, there are several pieces missing from this project. In short, there
+are two major missing components: tests and timing.
+
+ * Tests:
+  I do not have any unit or regression tests for the code, nor do I have coverage
+  tests with lcov/gcov. In essence, the `make test` and `make coverage` rules that
+  were supposed to be implemented are not.
+  
+ * Timing:
+  I do not have timers for performance-critical code, or any code, for that matter.
+  I am linking GRVY at the moment, but adding timers is another layer of complexity
+  that I'm just not ready for. Consequently, there are no timers in the code, and
+  thus no performance results, aside from "completes fast enough most of the time."
+
+However, everything else is functioning. I have an input file which takes in
+configuration options (documented in the README.md and in comments). I have the
+option to run in verification mode for the simple ODE, debug mode for (slightly)
+more verbose outputs, three RK methods and Euler's method.
+
+# Simple ODE
+
+The simple ODE I chose was $\frac{dx}{dt} = m \sin(t) + n t^3 / 2$, with fixed
+parameters $m = 4$ and $n = 2$. A plot of the solution path with $h = 100$ 
+is presented in Figure 1.
+
+```{r fig1,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 100"}
+knitr::include_graphics("./simple-euler-100-100.png")
+```
+
+An improved solution with $h=10$ is found in Figure 2.
+```{r fig2,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 10"}
+knitr::include_graphics("./simple-euler-10-1000.png")
+```
+
+An example with $h = 10$ using the RK4 method is in Figure 3.
+```{r fig3,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 10"}
+knitr::include_graphics("./simple-rk4-0.1-10000.png")
+```
+
+```{r fig4,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Convergence Analysis on Log-Log scale, with slopes shown"}
+knitr::include_graphics("./convergence_simple.png")
+```
+
+Finally, the convergence analysis is presented in Figure 4. Note that Euler's method converges as it should, linearly with $h$. The Runge-Kutta method has
+an interesting time of things, as it initially converges as the step size decreases. However, once $h$ reaches 1, the error starts increasing again. I suspect
+this is due to roundoff error. Regressing on the three points where the error decreases shows a third-order trend, which is a bit too low for RK4. Most likely
+this is because there are not enough points to get an accurate estimate of the error.
+
+# Charged Particle
+
+All of the charged particle simulations use Runge-Kutta methods, and are qualitatively fairly similar. The convergence analysis was done with the
+"correct" solution being an RK-F-45 method with $h = 1e-5$.
