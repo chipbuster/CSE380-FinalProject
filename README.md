@@ -7,6 +7,13 @@ the precanned project. This is the repo for that project.
 The project instructions can be found in canned\_project.pdf. I intend to
 implement most of the project...though of course time constraints may apply.
 
+## Report
+
+The report can be found in the `report` directory as a PDF, along with 
+its source Rmd file. The scripts to plot the output can be found in
+`plotting`, though not all the source data is included due to file
+size limitations of GitHub. 
+
 ## Simple ODE
 
 The simple ODE that I'll be solving is dx/dt = 4 sin(t) + 2 t^3.
