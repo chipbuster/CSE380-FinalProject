@@ -21,7 +21,7 @@ are two major missing components: tests and timing.
  * Tests:
   I do not have any unit or regression tests for the code, nor do I have coverage
   tests with lcov/gcov. In essence, the `make test` and `make coverage` rules that
-  were supposed to be implemented are not.
+  were supposed to be implemented are missing.
   
  * Timing:
   I do not have timers for performance-critical code, or any code, for that matter.
@@ -32,7 +32,11 @@ are two major missing components: tests and timing.
 However, everything else is functioning. I have an input file which takes in
 configuration options (documented in the README.md and in comments). I have the
 option to run in verification mode for the simple ODE, debug mode for (slightly)
-more verbose outputs, three RK methods and Euler's method.
+more verbose outputs, three RK methods in GSL, and a homegrown Euler's method.
+
+# Plotting Code
+
+Cide
 
 # Simple ODE
 
@@ -45,16 +49,16 @@ knitr::include_graphics("./simple-euler-100-100.png")
 ```
 
 An improved solution with $h=10$ is found in Figure 2.
-```{r fig2,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 10"}
+```{r fig2,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 10. Note that the numerial solution is better than in Figure 1."}
 knitr::include_graphics("./simple-euler-10-1000.png")
 ```
 
 An example with $h = 10$ using the RK4 method is in Figure 3.
-```{r fig3,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with Euler's Method, h = 10"}
+```{r fig3,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Solution Trajectory with RK4, h = 0.1"}
 knitr::include_graphics("./simple-rk4-0.1-10000.png")
 ```
 
-```{r fig4,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Convergence Analysis on Log-Log scale, with slopes shown"}
+```{r fig4,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="Convergence Analysis on Log-Log scale, with slopes shown. The divergence of the RK4 method at smaller $h$ is thought to be due to roundoff error. Hence, the slope is only calculated on the points where the error decreases as expected."}
 knitr::include_graphics("./convergence_simple.png")
 ```
 
@@ -67,3 +71,17 @@ this is because there are not enough points to get an accurate estimate of the e
 
 All of the charged particle simulations use Runge-Kutta methods, and are qualitatively fairly similar. The convergence analysis was done with the
 "correct" solution being an RK-F-45 method with $h = 1e-5$.
+
+Figure 5 shows a solution plotted with RKCK, along with some velocity vectors. As expected, the velocity vectors lie more-or-less tangent to the particle's path.
+
+```{r fig5,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="An example solution with RKCK, with velocity vectors plotted. As intuition would suggest, the velocity vectors lie tangent to the particle's path"}
+knitr::include_graphics("./charged-rkck-vectors.png")
+```
+
+Figure 6 shows RK4, RKCK, and RKF45 solutions overlaid on each other with $h = 0.1$. As can be seen from the image, there is no distinguishable difference between
+these solution paths at $h = 0.1$. Unfortunately, the next largest tested step, $h = 1$, caused a catastrophic failure of the solver, and the solutions are 
+essentially straight lines, which are not very interesting.
+
+```{r fig6,fig.align="center",out.width="4in",out.height="4in",echo=FALSE,message=FALSE,include=TRUE,fig.cap="A comparison of all three Runge-Kutta methods, with $h = 0.1$. Even at this relatively coarse timestep, there is no appreciable difference between the three methods."}
+knitr::include_graphics("./charged-comparison.png")
+```
