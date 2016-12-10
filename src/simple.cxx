@@ -86,6 +86,9 @@ vector<Vec2> gsl_simple_trajectory(Vec2 initState,const progOptions::Options& op
 {
 
   // Initialize the parts of GSL ODE that relate only to the problem.
+  
+  /* In the general form of the problem, there are two parameters. In this case,
+   * I've specialized them to 4 and 2, so I can record them in the code itself*/
   double params[2] = {4,2};
   gsl_odeiv2_system sys = {simple_func, simple_jac, 1, params};
 
@@ -168,8 +171,12 @@ vector<Vec2> analytical_solution(const vector<Vec2>& numericalSolutionPath){
 /* Calculate the deviation of the numeric solution from the analytical one
  * at the last step of the numerical simulation */
 double calcSimpleNumericalError(vector<Vec2> analytic, vector<Vec2> numeric){
-  Vec2 lastAnalytic = analytic.back();
-  Vec2 lastNumeric = numeric.back();
+  double max = 0.0;
+  #pragma omp parallel reduction(max : max)
+  for(size_t j = 0; j < numeric.size(); j++){
+    double diff = abs(analytic[j].x - numeric[j].x);
+    if (diff > max) max = diff;
+  }
 
-  return abs(lastAnalytic.x - lastNumeric.x);
+  return max;
 }
