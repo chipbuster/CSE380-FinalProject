@@ -14,13 +14,9 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-    // Read parameterfile name from command line OR use default value
     string optionFilename;
     if (argc == 1){
         optionFilename = "input.dat"; //If no args given, assume input.dat
-    }
-    else if (argc == 2){
-        optionFilename = string(argv[2]); //If one arg given, use that arg
     }
     else{
         cerr << "I don't know what you're trying to do. Please provide "
