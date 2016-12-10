@@ -171,8 +171,12 @@ vector<Vec2> analytical_solution(const vector<Vec2>& numericalSolutionPath){
 /* Calculate the deviation of the numeric solution from the analytical one
  * at the last step of the numerical simulation */
 double calcSimpleNumericalError(vector<Vec2> analytic, vector<Vec2> numeric){
-  Vec2 lastAnalytic = analytic.back();
-  Vec2 lastNumeric = numeric.back();
+  double max = 0.0;
+  #pragma omp parallel reduction(max : max)
+  for(size_t j = 0; j < numeric.size(); j++){
+    double diff = abs(analytic[j].x - numeric[j].x);
+    if (diff > max) max = diff;
+  }
 
-  return abs(lastAnalytic.x - lastNumeric.x);
+  return max;
 }

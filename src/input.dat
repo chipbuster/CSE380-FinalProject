@@ -2,9 +2,9 @@ problem   = 0                   # 0 for simple problem, 1 for charged particle
 solMethod = 0                   # 0 = euler
                                 # 1 = rk4
                                 # 2 = rkck
-              0                  # 3 = rkf45
-stepSize = 0.001
-nsteps =   10000000
+                               # 3 = rkf45
+stepSize = 100
+nsteps =   100
 
 verificationMode = true       # verification mode?
 debugMode = true               # debug mode?
