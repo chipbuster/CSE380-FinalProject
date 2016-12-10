@@ -12,14 +12,16 @@ import pdb
 def plotOne(filename):
     """Plot the data in a single file"""
     data = np.loadtxt(filename, delimiter=",")
+
+    data = data[:,:]
     print("Data Loaded!")
 
-    x = data[0,::100]
-    y = data[0,::100]
-    z = data[0,::100]
-    u = data[0,::100]
-    v = data[0,::100]
-    w = data[0,::100]
+    x = data[0,:]
+    y = data[1,:]
+    z = data[2,:]
+    u = data[3,:]
+    v = data[4,:]
+    w = data[5,:]
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
